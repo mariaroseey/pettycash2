@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custodian Dashboard</title>
+    <link rel="stylesheet" href="/css/custodash.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <ul class="menu">
+            <li><a href="/custodian/dashboardCustodian" class="active"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+            <li><a href="/custodian/addTransactions" id="addTransactionLink"><i class="fas fa-plus-circle"></i><span>Add Transaction</span></a></li>
+            <li><a href="/custodian/custodianViewTrans"><i class="fas fa-file-alt"></i><span>Reports</span></a></li>
+            <li><a href="#"><i class="fas fa-user"></i><span>Profile</span></a></li>
+            <li class="logout"><a href="/logout"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+        <!-- Top Bar -->
+        <div class="topbar">
+            <div class="toggle"><i class="fas fa-bars"></i></div>
+            <div class="title">Custodian Dashboard</div>
+            <div class="admin">Hello, Custodian!</div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-container">
+            <!-- Search Bar -->
+            <div class="search">
+                <label>
+                    <ion-icon name="search-outline"></ion-icon>
+                    <input type="text" placeholder="Search transactions...">
+                </label>
+            </div>
+
+            <!-- Transaction Table -->
+            <div class="table-container">
+                <table class="custodian-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Description</th>
+                            <th>OR No</th>
+                            <th>Amount Given</th>
+                            <th>Receipt Image</th>
+                            <th>Purchaser</th>
+                            <th>Employee ID</th>
+                            <th>Personal Contribution</th>
+                            <th>Store Name</th>
+                            <th>Total</th>
+                            <th>Voucher No</th>
+                            <th>Items ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Office Supplies</td>
+                            <td>123456</td>
+                            <td>PHP 500.00</td>
+                            <td><a href="#">View</a></td>
+                            <td>John Doe</td>
+                            <td>EMP001</td>
+                            <td>PHP 200.00</td>
+                            <td>Office Store</td>
+                            <td>PHP 700.00</td>
+                            <td>VN123</td>
+                            <td>ITEM001</td>
+                        </tr>
+                        <!-- Add more rows dynamically here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- JavaScript -->
+    <script>
+        // Sidebar toggle functionality
+        const toggle = document.querySelector('.toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const main = document.querySelector('.main');
+    
+        toggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            main.classList.toggle('active');
+        });
+    
+       
+    
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custodian Dashboard</title>
+    <link rel="stylesheet" href="/css/custodash.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <ul class="menu">
+            <li><a href="/custodian/dashboardCustodian" class="active"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+            <li><a href="/custodian/addTransactions" id="addTransactionLink"><i class="fas fa-plus-circle"></i><span>Add Transaction</span></a></li>
+            <li><a href="/custodian/custodianViewTrans"><i class="fas fa-file-alt"></i><span>Reports</span></a></li>
+            <li><a href="#"><i class="fas fa-user"></i><span>Profile</span></a></li>
+            <li class="logout"><a href="/custodian/logout"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+        <!-- Top Bar -->
+        <div class="topbar">
+            <div class="toggle"><i class="fas fa-bars"></i></div>
+            <div class="title">Custodian Dashboard</div>
+            <div class="admin">Hello, Custodian!</div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-container">
+            <!-- Search Bar -->
+            <div class="search">
+                <label>
+                    <ion-icon name="search-outline"></ion-icon>
+                    <input type="text" placeholder="Search transactions...">
+                </label>
+            </div>
+
+            <!-- Transaction Table -->
+            <div class="table-container">
+                <table class="custodian-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Description</th>
+                            <th>OR No</th>
+                            <th>Amount Given</th>
+                            <th>Receipt Image</th>
+                            <th>Purchaser</th>
+                            <th>Employee ID</th>
+                            <th>Personal Contribution</th>
+                            <th>Store Name</th>
+                            <th>Total</th>
+                            <th>Voucher No</th>
+                            <th>Items ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Office Supplies</td>
+                            <td>123456</td>
+                            <td>PHP 500.00</td>
+                            <td><a href="#">View</a></td>
+                            <td>John Doe</td>
+                            <td>EMP001</td>
+                            <td>PHP 200.00</td>
+                            <td>Office Store</td>
+                            <td>PHP 700.00</td>
+                            <td>VN123</td>
+                            <td>ITEM001</td>
+                        </tr>
+                        <!-- Add more rows dynamically here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="popup-overlay" id="addTransactionPopup">
+        <div class="popup-container">
+            <span class="close-button" id="closePopup" aria-label="Close Popup">&times;</span>
+            <div class="add-transaction-container">
+                <h2 class="transaction-title">Add Transaction</h2>
+                <form id="addTransactionForm" action="/custodian/add-transaction" method="POST" enctype="multipart/form-data">
+
+                    <!-- Form Section -->
+                    <div class="transaction-content">
+                        <div class="transaction-form">
+                            <div class="form-group">
+                                <label for="transaction_id">Transaction ID:</label>
+                                <input type="text" id="transaction_id" name="transaction_id" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="transactionDate">Date:</label>
+                                <input type="date" id="transactionDate" name="transactionDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="amountGiven">Amount Given:</label>
+                                <input type="number" id="amountGiven" name="amountGiven" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="oRNo">OR No.:</label>
+                                <input type="text" id="oRNo" name="oRNo" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description:</label>
+                                <input type="text" id="description" name="description" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="total">Total:</label>
+                                <input type="number" id="total" name="total" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="purchaser">Purchaser:</label>
+                                <input type="text" id="purchaser" name="purchaser" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="employeeId">Employee ID:</label>
+                                <input type="text" id="employeeId" name="employeeId" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="personalContributions">Personal Contributions:</label>
+                                <input type="number" id="personalContributions" name="personalContributions">
+                            </div>
+                            <div class="form-group">
+                                <label for="storeName">Store Name:</label>
+                                <input type="text" id="storeName" name="storeName" required>
+                            </div>
+                        </div>
+    
+                        <!-- Receipts Section -->
+                        <div class="receipts-section">
+                            <label for="receiptsUpload">Receipts:</label>
+                            <input type="file" name="receipts[]" id="receiptImg" multiple>
+                            <div class="uploaded-receipts" id="receiptPreview">
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Items Table -->
+                    <div class="items-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Items</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="itemsTableBody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                            <tfoot>
+                                <tr class="total-row">
+                                    <td>Total:</td>
+                                    <td id="tableTotal">P0.00</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+    
+                    <!-- Add Item Section -->
+                    <div class="add-item-section">
+                        <input type="text" placeholder="Item Name" id="itemNameInput">
+                        <input type="number" placeholder="P0.00" id="itemPriceInput">
+                        <button type="button" id="addItemButton">Add Item</button>
+                    </div>
+    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button type="submit" id="addTransactionButton">Add Transaction</button>
+                        <button type="button" id="cancelTransactionButton">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- JavaScript -->
+    <script>
+        // Sidebar toggle functionality
+        const toggle = document.querySelector('.toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const main = document.querySelector('.main');
+    
+        toggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            main.classList.toggle('active');
+        });
+    
+        // Pop-up functionality
+        const addTransactionLink = document.getElementById('addTransactionLink');
+        const addTransactionPopup = document.getElementById('addTransactionPopup');
+        const closePopup = document.getElementById('closePopup');
+    
+        addTransactionLink.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent link navigation
+            addTransactionPopup.style.display = 'flex'; // Show the pop-up
+        });
+    
+        closePopup.addEventListener('click', () => {
+            addTransactionPopup.style.display = 'none'; // Hide the pop-up
+        });
+    
+        addTransactionPopup.addEventListener('click', (e) => {
+            if (e.target === addTransactionPopup) {
+                addTransactionPopup.style.display = 'none';
+            }
+        });
+        // Add Item Functionality
+    const addItemButton = document.getElementById('addItemButton');
+    const itemsTableBody = document.getElementById('itemsTableBody');
+    const totalField = document.getElementById('total');
+
+    addItemButton.addEventListener('click', () => {
+        // Get item name and price from inputs
+        const itemNameInput = document.getElementById('itemNameInput');
+        const itemPriceInput = document.getElementById('itemPriceInput');
+
+        const itemName = itemNameInput.value.trim();
+        const itemPrice = parseFloat(itemPriceInput.value.trim());
+
+        // Validate inputs
+        if (!itemName) {
+            alert('Please enter an item name.');
+            return;
+        }
+        if (isNaN(itemPrice) || itemPrice <= 0) {
+            alert('Please enter a valid price greater than 0.');
+            return;
+        }
+
+        // Create a new row for the item
+        const row = document.createElement('tr');
+
+        // Item name cell
+        const itemCell = document.createElement('td');
+        itemCell.textContent = itemName;
+
+        // Item price cell
+        const priceCell = document.createElement('td');
+        priceCell.textContent = `PHP ${itemPrice.toFixed(2)}`;
+        priceCell.dataset.price = itemPrice; // Store raw price value for calculations
+
+        // Add cells to the row
+        row.appendChild(itemCell);
+        row.appendChild(priceCell);
+
+        // Add the row to the table body
+        itemsTableBody.appendChild(row);
+
+        // Remove empty row placeholder if it exists
+        const emptyRow = document.querySelector('.empty-row');
+        if (emptyRow) {
+            emptyRow.remove();
+        }
+
+        // Update the total
+        updateTotal();
+
+        // Clear inputs
+        itemNameInput.value = '';
+        itemPriceInput.value = '';
+    });
+
+    // Function to update the total price
+    function updateTotal() {
+        let total = 0;
+
+        // Iterate through all price cells and sum their values
+        const priceCells = itemsTableBody.querySelectorAll('td[data-price]');
+        priceCells.forEach(cell => {
+            total += parseFloat(cell.dataset.price);
+        });
+
+        // Update the total field in the form
+        totalField.value = total.toFixed(2);
+    }
+    
+    
+    </script>
+    
+</body>
+</html>
